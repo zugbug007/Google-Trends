@@ -1,0 +1,44 @@
+---
+title: "Google Trends for National Trust"
+author: "Alan Millington"
+date: "09/06/2020"
+output: html_document
+---
+
+```{r libraries}
+knitr::opts_chunk$set(echo = TRUE)
+library(gtrendsR)
+library(tidyverse)
+```
+
+## R Markdown
+
+
+```{r plot}
+
+res <- gtrends(c("national trust", "national trust membership"), geo="GB")
+plot(res)
+
+iot <- res$interest_over_time
+
+```
+
+## Including Plots
+
+
+```{r}
+related_queries <- res$related_queries
+
+iot2020 <- iot %>% 
+  filter(date > as.Date("2020-03-01"))
+
+iot2020 %>% 
+  ggplot() + geom_line(aes(x = date,
+                           y = hits,
+                           color = keyword)) +
+  theme_minimal() +
+  labs(title = "NT Reopening 2020",
+       subtitle = "Google Trends Report", caption = "9th June 2020")
+
+```
+
