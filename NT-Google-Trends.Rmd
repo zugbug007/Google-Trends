@@ -5,14 +5,13 @@ date: "09/06/2020"
 output: html_document
 ---
 
-```{r libraries}
+```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(gtrendsR)
 library(tidyverse)
 ```
 
-## R Markdown
-
+## Trend since 2016 to present day.
 
 ```{r plot}
 
@@ -23,14 +22,13 @@ iot <- res$interest_over_time
 
 ```
 
-## Including Plots
+## This year only
 
-
-```{r}
+```{r echo=FALSE}
 related_queries <- res$related_queries
 
 iot2020 <- iot %>% 
-  filter(date > as.Date("2020-03-01"))
+  filter(date > as.Date("2020-01-01"))
 
 iot2020 %>% 
   ggplot() + geom_line(aes(x = date,
